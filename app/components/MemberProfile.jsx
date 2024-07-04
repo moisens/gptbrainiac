@@ -7,8 +7,8 @@ const MemberProfile = async () => {
     <div className="px-4 flex items-center gap-2">
       <UserButton afterSignOutUrl="/" />
       <div className="flex flex-col gap-0">
-        <p className="text-base text-black semibold">{`${user.firstName} ${user.lastName}`}</p>
-        <p className="text-xs text-gray-600 font-light">
+        <p className="text-base text-white bg-gray-700 semibold px-2 rounded-md">{`${user.firstName} ${user.lastName}`}</p>
+        <p className="text-xs text-gray-600 font-light px-2">
           {user.emailAddresses[0].emailAddress}
         </p>
       </div>
