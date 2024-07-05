@@ -3,19 +3,31 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { generateChatResponse } from "../utils/utils.actions";
+import toast from "react-hot-toast";
 
 const Chat = () => {
   const [text, setText] = useState("");
-  const [message, setMessage] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const { mutate } = useMutation({
-    mutationFn: (message) => generateChatResponse(message),
+    mutationFn: (query) => generateChatResponse([...messages, query]),
+    onSuccess: (data) => {
+      if (!data) {
+        toast.error("brainiac couldn't answer your query! 🫤");
+        return;
+      }
+      setMessages((prev) => [...prev, data]);
+    },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutate(text);
+    const query = { role: "user", content: text };
+    mutate(query);
+    setMessages((prev) => [...prev, query]);
+    setText("");
   };
+  console.log("messages: ", messages);
 
   return (
     <div className="min-h-[calc(100vh-6rem)] grid grid-rows-[1fr,auto] bg-red-300">
