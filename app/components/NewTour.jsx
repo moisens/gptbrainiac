@@ -1,16 +1,39 @@
 "use client";
 
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import TourInfo from "./TourInfo.jsx";
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-
-  const formData = new FormData(e.currentTarget);
-  const destination = Object.fromEntries(formData.entries());
-  console.log(destination);
-};
+import {
+  createNewTour,
+  generateTourResponse,
+  getExistingTour,
+} from "../utils/utils.actions.js";
+import toast from "react-hot-toast";
 
 const NewTour = () => {
+  const {
+    mutate,
+    isPending,
+    data: tour,
+  } = useMutation({
+    mutationFn: async (destination) => {
+      const newTour = await generateTourResponse(destination);
+      if (newTour) return newTour;
+      toast.error("Brainiac couldn't found the city you mentioned 🫤");
+      return null;
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const destination = Object.fromEntries(formData.entries());
+    mutate(destination);
+  };
+
+  if (isPending)
+    return <span className="loading loading-ring loading-lg"></span>;
+
   return (
     <>
       <form onSubmit={handleSubmit} className="max-w-2xl">
@@ -28,9 +51,7 @@ const NewTour = () => {
           </button>
         </div>
       </form>
-      <div className="mt-16">
-        <TourInfo />
-      </div>
+      <div className="mt-16">{tour ? <TourInfo tour={tour} /> : null}</div>
     </>
   );
 };
