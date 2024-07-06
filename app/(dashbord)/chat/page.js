@@ -1,3 +1,4 @@
+import { currentUser } from "@clerk/nextjs";
 import Chat from "@/app/components/Chat";
 import {
   dehydrate,
@@ -5,12 +6,14 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-const Chatpage = () => {
+const Chatpage = async () => {
   const queryClient = new QueryClient();
+  const { firstName, lastName, imageUrl } = await currentUser();
+  const userData = { firstName, lastName, imageUrl };
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Chat />
+      <Chat userData={userData} />
     </HydrationBoundary>
   );
 };
