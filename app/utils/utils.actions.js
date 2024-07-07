@@ -29,7 +29,7 @@ export const generateChatResponse = async (chatMessages) => {
 export const generateTourResponse = async ({ city, country }) => {
   const query = `Find the exact ${city} in this exact ${country}.
 If ${city} and ${country} exist, create a list of things families or friends can do in this ${city},${country}.
-If ${city} is located in north America, ${country} is equal to Usa or Canada. 
+If ${city} is located in north America, ${country} is equal to USA or Canada. 
 Once you have a list, create a one-day tour. Response should be  in the following JSON format: 
  
 {
@@ -82,4 +82,32 @@ export const createNewTour = async (tour) => {
   return prisma.tour.create({
     data: tour,
   });
+};
+
+export const getAllTours = async (searchTerm) => {
+  if (!searchTerm) {
+    const tours = await prisma.tour.findMany({
+      orderBy: {
+        city: "desc",
+      },
+    });
+    return tours;
+  }
+
+  const tours = await prisma.tour.findMany({
+    where: {
+      OR: [
+        {
+          city: { contains: searchTerm },
+        },
+        {
+          country: { contains: searchTerm },
+        },
+      ],
+    },
+    orderBy: {
+      city: "desc",
+    },
+  });
+  return tours;
 };
