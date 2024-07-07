@@ -1,4 +1,4 @@
-import NewTour from "@/app/components/NewTour.jsx";
+import NewTour from "../../../components/NewTour";
 import {
   dehydrate,
   HydrationBoundary,
