@@ -1,12 +1,15 @@
 import { SiOpenaigym } from "react-icons/si";
 import { TbCircuitChangeover } from "react-icons/tb";
 import ThemeToggle from "./ThemeToggle";
+import Link from "next/link";
 
 const SidebarHeader = () => {
   return (
     <div className="flex items-center mb-4 gap-4 px-4">
       <TbCircuitChangeover className="w-10 h-10 text-primary rotate-90" />
-      <h2 className="text-xl font-extrabold text-primary mr-auto">brainiac</h2>
+      <h2 className="text-xl font-extrabold text-primary mr-auto">
+        <Link href="/chat">brainiac</Link>
+      </h2>
       <ThemeToggle />
     </div>
   );
