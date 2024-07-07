@@ -8,7 +8,7 @@ const TourCard = ({ tour }) => {
       className="card card-compact rounded-xl bg-base-100 shadow-sm transition-all hover:shadow-lg hover:scale-110 hover:transition-all"
     >
       <div className="card-body items-center text-center">
-        <h2 className="card-title text-center">{title}</h2>
+        <h2 className="card-title text-center">{`${title}.`}</h2>
         <h4 className="text-base justify-end">
           {city}, {country}
         </h4>
