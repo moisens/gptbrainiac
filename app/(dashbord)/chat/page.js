@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
-import Chat from "@/app/components/Chat";
+import Chat from "../../components/Chat";
 import {
   dehydrate,
   HydrationBoundary,
