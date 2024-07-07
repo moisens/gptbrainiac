@@ -10,15 +10,26 @@ import {
 import toast from "react-hot-toast";
 
 const NewTour = () => {
+  const queryClient = useQueryClient();
+
   const {
     mutate,
     isPending,
     data: tour,
   } = useMutation({
     mutationFn: async (destination) => {
+      const existingTour = await getExistingTour(destination);
+      if (existingTour) return existingTour;
+
       const newTour = await generateTourResponse(destination);
-      if (newTour) return newTour;
-      toast.error("Brainiac couldn't found the city you mentioned 🫤");
+      if (newTour) {
+        const response = await createNewTour(newTour);
+        console.log(response);
+        queryClient.invalidateQueries({ queryKey: ["tours"] });
+        return newTour;
+      }
+
+      toast.error("Brainiac couldn't found the city! 🤖");
       return null;
     },
   });
