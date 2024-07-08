@@ -1,33 +1,43 @@
 import Link from "next/link";
-import { generateTourImage, getSingleTour } from "../../../utils/utils.actions";
+import { getSingleTour } from "../../../utils/utils.actions";
 import { redirect } from "next/navigation";
 import TourInfo from "../../../components/TourInfo";
 import Image from "next/image";
+import axios from "axios";
+
+const url = `https://api.unsplash.com/search/photos?client_id=${process.env.UNSPLASH_API_KEY}&query=`;
 
 const SingleTourpage = async ({ params }) => {
   const tour = await getSingleTour(params.id);
   if (!tour) redirect("/tours");
 
-  const tourImage = await generateTourImage({
-    city: tour.city,
-    country: tour.country,
-  });
+  //? Unsplash API
+  const { data, status } = await axios.get(`${url}${tour.city}`);
+  const tourImage = data?.results[0]?.urls.raw;
+
+  //? openai
+  //const tourImage = await generateTourImage({
+  //  city: tour.city,
+  //  country: tour.country,
+  //});
 
   return (
-    <div>
-      <Link href="/tours" className="btn btn-primary mb-12">
-        back to tour
-      </Link>
+    <div className="flex flex-col justify-center items-center">
+      <div className="w-full h-auto mb-12">
+        <Link href="/tours" className="btn btn-primary">
+          back to tour
+        </Link>
+      </div>
       {tourImage ? (
-        <div>
+        <div className="max-w-2xl rounded-xl shadow-lg mb-16">
           <Image
             src={tourImage}
             alt={tour.title}
             title={tour.title}
-            width={512}
+            width={672}
             height={512}
             priority
-            className="rounded-xl shadow-sm mb-16 max-full h-96 object-cover"
+            className="rounded-xl max-w-full h-96 object-cover"
           />
         </div>
       ) : null}
