@@ -35,8 +35,9 @@ Once you have a list, create a one-day tour. Response should be  in the followin
  
 {
   "tour": {
-    "city": "${city}",
-    "country": "${country}",
+    "slug": "${city.toLowerCase()}-${country.toLowerCase()}"
+    "city": "${city.toLowerCase()}",
+    "country": "${country.toLowerCase()}",
     "title": "title of the tour",
     "description": "short description of the city and tour",
     "stops": ["short paragraph on the stop 1", "short paragraph on the stop 2","short paragraph on the stop 3"]
@@ -45,7 +46,7 @@ Once you have a list, create a one-day tour. Response should be  in the followin
  
 "stops" property should include only three stops.
 "title" try to diversify the titles. Not always the same title.
-If you can't find info on exact ${city}, or ${city} does not exist, or it's population is less than 1, or it is not located in the following ${country}, return { "tour": null }, with no additional characters. Be careful with typos inside the JSON structure like extra commas after arrays last item, this info will be parsed with a JSON.parse() method.`;
+If you can't find info on exact ${city.toLowerCase()}, or ${city.toLowerCase()} does not exist, or it's population is less than 1, or it is not located in the following ${country.toLowerCase()}, return { "tour": null }, with no additional characters. Be careful with typos inside the JSON structure like extra commas after arrays last item, this info will be parsed with a JSON.parse() method.`;
 
   try {
     const response = await openai.chat.completions.create({
@@ -63,7 +64,7 @@ If you can't find info on exact ${city}, or ${city} does not exist, or it's popu
     if (!tourData) return null;
     return tourData.tour;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return null;
   }
 };
@@ -113,10 +114,10 @@ export const getAllTours = async (searchTerm) => {
   return tours;
 };
 
-export const getSingleTour = async (id) => {
+export const getSingleTour = async (slug) => {
   return prisma.tour.findUnique({
     where: {
-      id,
+      slug,
     },
   });
 };

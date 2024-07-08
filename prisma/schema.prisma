@@ -15,6 +15,7 @@ datasource db {
 
 model Tour {
   id String @id @default(uuid())
+  slug String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   city String
@@ -24,4 +25,9 @@ model Tour {
   image String? @db.Text
   stops Json
   @@unique([city, country])
+}
+
+model Token {
+  clerkId String @id
+  tokens Int @default (100)
 }

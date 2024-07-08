@@ -1,10 +1,10 @@
 import Link from "next/link.js";
 
 const TourCard = ({ tour }) => {
-  const { id, title, city, country } = tour;
+  const { slug, title, city, country } = tour;
   return (
     <Link
-      href={`/tours/${id}`}
+      href={`/tours/${slug}`}
       className="card card-compact rounded-xl bg-base-100 shadow-sm transition-all hover:shadow-lg hover:scale-110 hover:transition-all"
     >
       <div className="card-body items-center text-center">

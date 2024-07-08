@@ -24,7 +24,7 @@ const NewTour = () => {
       const newTour = await generateTourResponse(destination);
       if (newTour) {
         const response = await createNewTour(newTour);
-        console.log(response);
+        //console.log(response);
         queryClient.invalidateQueries({ queryKey: ["tours"] });
         return newTour;
       }
