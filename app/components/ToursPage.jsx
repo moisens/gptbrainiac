@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllTours } from "../utils/utils.actions";
 import ToursList from "./ToursList";
 import { useState } from "react";
+import { capitalize } from "../utils/utils.capitalize";
 
 const ToursPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,10 +20,11 @@ const ToursPage = () => {
         <div className="join w-full">
           <input
             type="text"
-            value={searchTerm}
+            value={capitalize(searchTerm)}
             onChange={(e) => setSearchTerm(e.target.value)}
             required
             className="input input-bordered join-item w-full"
+            placeholder="search a city or a country..."
           />
           <button
             className="btn btn-primary join-item"

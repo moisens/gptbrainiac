@@ -8,6 +8,7 @@ import {
   getExistingTour,
 } from "../utils/utils.actions.js";
 import toast from "react-hot-toast";
+import { capitalize } from "../utils/utils.capitalize";
 
 const NewTour = () => {
   const queryClient = useQueryClient();
@@ -34,26 +35,15 @@ const NewTour = () => {
     },
   });
 
-  const capitalize = (str) => {
-    return str
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
 
-    if (destination.city) {
-      destination.city = capitalize(destination.city);
-    }
-
-    if (destination.country) {
+    if (destination.city) destination.city = capitalize(destination.city);
+    if (destination.country)
       destination.country = capitalize(destination.country);
-    }
 
     mutate(destination);
   };
