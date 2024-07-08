@@ -8,11 +8,11 @@ import axios from "axios";
 const url = `https://api.unsplash.com/search/photos?client_id=${process.env.UNSPLASH_API_KEY}&query=`;
 
 const SingleTourpage = async ({ params }) => {
-  const tour = await getSingleTour(params.id);
+  const tour = await getSingleTour(params.slug);
   if (!tour) redirect("/tours");
 
   //? Unsplash API
-  const { data, status } = await axios.get(`${url}${tour.city}`);
+  const { data } = await axios.get(`${url}${tour.city}`);
   const tourImage = data?.results[0]?.urls.raw;
 
   //? openai
