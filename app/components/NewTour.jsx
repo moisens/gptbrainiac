@@ -46,14 +46,19 @@ const NewTour = () => {
     return <span className="loading loading-ring loading-lg"></span>;
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="max-w-2xl">
+    <div className="flex flex-col justify-center items-center">
+      <form onSubmit={handleSubmit} className="max-w-2xl my-12">
         <h2 className="mb-4">Select your dream destination</h2>
         <div className="join w-full">
-          <input type="text" className="input" placeholder="city" name="city" />
           <input
             type="text"
-            className="input"
+            className="input input-bordered join-item w-full"
+            placeholder="city"
+            name="city"
+          />
+          <input
+            type="text"
+            className="input input-bordered join-item w-full"
             placeholder="country"
             name="country"
           />
@@ -63,7 +68,7 @@ const NewTour = () => {
         </div>
       </form>
       <div className="mt-16">{tour ? <TourInfo tour={tour} /> : null}</div>
-    </>
+    </div>
   );
 };
 
