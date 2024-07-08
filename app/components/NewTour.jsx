@@ -34,16 +34,36 @@ const NewTour = () => {
     },
   });
 
+  const capitalize = (str) => {
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
+
+    if (destination.city) {
+      destination.city = capitalize(destination.city);
+    }
+
+    if (destination.country) {
+      destination.country = capitalize(destination.country);
+    }
+
     mutate(destination);
   };
 
   if (isPending)
-    return <span className="loading loading-ring loading-lg"></span>;
+    return (
+      <div className="w-full h-96 flex justify-center items-center">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
 
   return (
     <div className="flex flex-col justify-center items-center">

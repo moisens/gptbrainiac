@@ -75,7 +75,7 @@ const Chat = ({ userData }) => {
             type="text"
             placeholder="Query..."
             className="input input-bordered join-item w-full"
-            value={text}
+            value={text.toLowerCase()}
             required
             onChange={(e) => setText(e.target.value)}
           />
