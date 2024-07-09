@@ -2,23 +2,46 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { generateChatResponse } from "../utils/utils.actions";
+import {
+  fetchUserTokenById,
+  generateChatResponse,
+  substractUserTokens,
+} from "../utils/utils.actions";
 import toast from "react-hot-toast";
 import Image from "next/image.js";
+import { useAuth } from "@clerk/nextjs";
 
 const Chat = ({ userData }) => {
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
+  const { userId } = useAuth();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (query) => generateChatResponse([...messages, query]),
-    onSuccess: (data) => {
-      if (!data) {
-        toast.error("brainiac couldn't answer your query! 🫤");
+    mutationFn: async (query) => {
+      const currentTokens = await fetchUserTokenById(userId);
+      if (currentTokens < 100) {
+        toast.error("Token balance too low...🤖");
         return;
       }
-      setMessages((prev) => [...prev, data]);
+
+      const response = await generateChatResponse([...messages, query]);
+      if (!response) {
+        toast.error("We couldn't answer to your query!🤖");
+        return;
+      }
+      setMessages((prev) => [...prev, response.message]);
+      const newTokens = await substractUserTokens(userId, response.tokens);
+      toast.success(`${newTokens} tokens remaining...🤖`);
     },
+
+    // mutationFn: (query) => generateChatResponse([...messages, query]),
+    // onSuccess: (data) => {
+    //   if (!data) {
+    //     toast.error("We couldn't answer to your query! 🤖");
+    //     return;
+    //   }
+    //   setMessages((prev) => [...prev, data]);
+    // },
   });
 
   const handleSubmit = (e) => {
