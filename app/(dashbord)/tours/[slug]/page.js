@@ -23,21 +23,27 @@ const SingleTourpage = async ({ params }) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="w-full h-auto mb-12">
+      <div className="w-full h-auto px-4 my-12">
         <Link href="/tours" className="btn btn-primary">
           back to tour
         </Link>
       </div>
       {tourImage ? (
-        <div className="max-w-2xl rounded-xl shadow-lg mb-16">
+        <div className="max-w-2xl rounded-xl shadow-lg mx-4 mb-16">
           <Image
             src={tourImage}
             alt={tour.title}
             title={tour.title}
             width={672}
-            height={512}
+            height={672}
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "cover",
+            }}
             priority
-            className="rounded-xl max-w-full h-96 object-cover"
+            className="rounded-xl h-96"
           />
         </div>
       ) : null}
