@@ -7,8 +7,8 @@ export default function Homepage() {
         <div className="max-w-md">
           <h1 className="text-7xl font-semibold text-primary">brainiac</h1>
           <p className="py-6 text-lg leading-loose">
-            Your AI language companion. Powered by OpenAI, it enhances your
-            conversations, content creation, and more!
+            Your AI language companion. Powered by OpenAI, it will helps you
+            search and archive your next journeys. 🛫
           </p>
           <Link href="/chat" className="btn btn-secondary ">
             Get Started

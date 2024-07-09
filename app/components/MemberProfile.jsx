@@ -1,4 +1,5 @@
-import { currentUser, UserButton, auth } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { fetchOrGenerateTokensForUser } from "../utils/utils.actions";
 
 const MemberProfile = async () => {
