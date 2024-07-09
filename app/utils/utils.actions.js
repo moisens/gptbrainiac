@@ -22,7 +22,10 @@ export const generateChatResponse = async (chatMessages) => {
     //console.log(response.choices[0].message);
     //console.log(response);
 
-    return response.choices[0].message;
+    return {
+      message: response.choices[0].message,
+      tokens: response.usage.total_tokens,
+    };
   } catch (error) {
     return null;
   }
