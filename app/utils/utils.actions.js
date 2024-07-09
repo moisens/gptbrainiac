@@ -45,12 +45,15 @@ Once you have a list, create a one-day tour. Response should be  in the followin
     "title": "title of the tour",
     "description": "short description of the city and tour",
     "stops": ["short paragraph on the stop 1", "short paragraph on the stop 2","short paragraph on the stop 3"]
+    
   }
 }
  
 "stops" property should include only three stops.
 "title" try to diversify the titles. Not always the same title.
 If you can't find info on exact ${city.toLowerCase()}, or ${city.toLowerCase()} does not exist, or it's population is less than 1, or it is not located in the following ${country.toLowerCase()}, return { "tour": null }, with no additional characters. Be careful with typos inside the JSON structure like extra commas after arrays last item, this info will be parsed with a JSON.parse() method.`;
+
+  //"stops": ["stop name", "stop name","stop name"]
 
   try {
     const response = await openai.chat.completions.create({
