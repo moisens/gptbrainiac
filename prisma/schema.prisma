@@ -29,5 +29,5 @@ model Tour {
 
 model Token {
   clerkId String @id
-  tokens Int @default (100)
+  tokens Int @default (3000)
 }

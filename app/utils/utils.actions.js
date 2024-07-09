@@ -63,7 +63,7 @@ If you can't find info on exact ${city.toLowerCase()}, or ${city.toLowerCase()} 
     //console.log(tourData);
 
     if (!tourData) return null;
-    return tourData.tour;
+    return { tour: tourData.tour, tokens: response.usage.total_tokens };
   } catch (error) {
     //console.log(error);
     return null;

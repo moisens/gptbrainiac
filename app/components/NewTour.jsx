@@ -4,14 +4,18 @@ import { useQueryClient, useMutation } from "@tanstack/react-query";
 import TourInfo from "./TourInfo.jsx";
 import {
   createNewTour,
+  fetchUserTokenById,
   generateTourResponse,
   getExistingTour,
+  substractUserTokens,
 } from "../utils/utils.actions.js";
 import toast from "react-hot-toast";
 import { capitalize } from "../utils/utils.capitalize";
+import { useAuth } from "@clerk/nextjs";
 
 const NewTour = () => {
   const queryClient = useQueryClient();
+  const { userId } = useAuth();
 
   const {
     mutate,
@@ -22,16 +26,24 @@ const NewTour = () => {
       const existingTour = await getExistingTour(destination);
       if (existingTour) return existingTour;
 
-      const newTour = await generateTourResponse(destination);
-      if (newTour) {
-        const response = await createNewTour(newTour);
-        //console.log(response);
-        queryClient.invalidateQueries({ queryKey: ["tours"] });
-        return newTour;
+      const currentTokens = await fetchUserTokenById(userId);
+      if (currentTokens < 300) {
+        toast.error("Token balance too low... 😱");
+        return;
       }
 
-      toast.error("Brainiac couldn't found the city! 🤖");
-      return null;
+      const newTour = await generateTourResponse(destination);
+      if (!newTour) {
+        toast.error("I couldn't found the city! 🤖");
+        return null;
+      }
+
+      const response = await createNewTour(newTour.tour);
+      //console.log(response);
+      queryClient.invalidateQueries({ queryKey: ["tours"] });
+      const newTokens = await substractUserTokens(userId, newTour.tokens);
+      toast.success(`${newTokens} tokens remaining. ⏳`);
+      return newTour.tour;
     },
   });
 
