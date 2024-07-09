@@ -1,9 +1,13 @@
 import { currentUser, UserButton, auth } from "@clerk/nextjs";
+import { fetchOrGenerateTokensForUser } from "../utils/utils.actions";
 
 const MemberProfile = async () => {
   const user = await currentUser();
   const { firstName, lastName, imageUrl } = user;
-  //console.log(firstName, lastName, imageUrl);
+  const { userId } = auth();
+
+  await fetchOrGenerateTokensForUser(userId);
+
   return (
     <div className="px-4 flex items-center gap-2">
       <UserButton afterSignOutUrl="/" />
