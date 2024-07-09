@@ -156,7 +156,7 @@ export const generateUserTokensForId = async (clerkId) => {
   return result?.tokens;
 };
 
-export const fetchOrGenerateTokensForId = async (clerkId) => {
+export const fetchOrGenerateTokensForUser = async (clerkId) => {
   const result = await fetchUserTokenById(clerkId);
   if (result) return result.tokens;
   return (await generateUserTokensForId(clerkId)).tokens;
