@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "brainiac",
   description:
-    "Your AI language companion. Powered by OpenAI, it enhances your conversations, content creation, and more!",
+    "Your AI language companion. Powered by OpenAI, it will helps you search and archive your next journeys.",
 };
 
 export default function RootLayout({ children }) {

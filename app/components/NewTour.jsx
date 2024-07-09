@@ -69,7 +69,7 @@ const NewTour = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <form onSubmit={handleSubmit} className="max-w-2xl my-12">
+      <form onSubmit={handleSubmit} className="max-w-2xl px-4 my-12">
         <h2 className="mb-4">Select your dream destination</h2>
         <div className="join w-full">
           <input

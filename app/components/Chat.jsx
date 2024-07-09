@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
   fetchUserTokenById,
   generateChatResponse,
@@ -56,10 +56,10 @@ const Chat = ({ userData }) => {
 
   return (
     <div className="min-h-[calc(100vh-6rem)] grid grid-rows-[1fr,auto]">
-      <div>
+      <div className="px-4">
         {messages.map(({ role, content }, messageId) => (
-          <>
-            <div className="chat chat-start" key={messageId}>
+          <Fragment key={messageId}>
+            <div className="chat chat-start">
               <div className="chat-image avatar mb-8">
                 <div className="w-10 rounded-full border-2">
                   <Image
@@ -84,7 +84,7 @@ const Chat = ({ userData }) => {
                 {content}
               </div>
             </div>
-          </>
+          </Fragment>
         ))}
         {isPending ? (
           <div className="max-w-screen-lg flex justify-center items-center">
@@ -92,7 +92,7 @@ const Chat = ({ userData }) => {
           </div>
         ) : null}
       </div>
-      <form onSubmit={handleSubmit} className="max-w-4xl pt-12">
+      <form onSubmit={handleSubmit} className="max-w-4xl pt-12 px-4">
         <div className="join w-full">
           <input
             type="text"

@@ -15,8 +15,8 @@ const ToursPage = () => {
   });
 
   return (
-    <>
-      <form className="max-w-lg my-12">
+    <div>
+      <form className="max-w-lg px-4 my-12">
         <div className="join w-full">
           <input
             type="text"
@@ -41,7 +41,7 @@ const ToursPage = () => {
       ) : (
         <ToursList data={data} />
       )}
-    </>
+    </div>
   );
 };
 

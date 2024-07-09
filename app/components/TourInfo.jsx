@@ -2,7 +2,7 @@ const TourInfo = ({ tour }) => {
   const { title, description, stops } = tour;
   let stopId = crypto.randomUUID();
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-2xl px-4">
       <h1 className="text-4xl font-semibold mb-4">{title}</h1>
       <p className="leading-loose mb-6">{description}</p>
       <ul>
